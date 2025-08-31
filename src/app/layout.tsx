@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Roboto } from 'next/font/google'
 import './globals.css'
+import Link from 'next/link'
 
 const fontRoboto = Roboto({
   variable: '--font-roboto',
@@ -22,9 +23,12 @@ export default function RootLayout({
         <header className="border-b border-black/10 bg-white">
           <div className="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
             <h1 className="text-lg font-semibold">Crystal 💎</h1>
-            <button className="text-sm bg-cyan-600 px-4 py-2 border-none rounded text-white">
-              Faça uma simulação agora!
-            </button>
+            <Link
+              href={'/'}
+              className="text-sm  px-4 py-2 text-zinc-500 border-zinc-300 border rounded "
+            >
+              Início
+            </Link>
           </div>
         </header>
         <main className="mx-auto max-w-6xl px-4 py-6">{children}</main>
