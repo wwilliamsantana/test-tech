@@ -1,27 +1,43 @@
-import { recalculateRouteAction } from '@/app/actions/recalculateROuteAction'
+import { recalculateRouteAction } from '@/app/actions/recalculateRouteAction'
+
+// types/index.ts
+
+/**
+ * Representa uma "perna" da viagem, ou seja, uma única entrega dentro de uma rota.
+ */
+export interface Leg {
+  sequence: number
+  orderId: string | number
+  distanceKm: number
+}
+
+export interface Route {
+  droneId: string | number
+  droneName: string
+  totalDistanceKm: number
+  legs: Leg[]
+}
+
+export interface RouteApiResponse {
+  routes: Route[]
+  unassignedOrderIds: (string | number)[]
+}
+
+async function getRouteData(): Promise<RouteApiResponse | null> {
+  const res = await fetch(`api/entregas/rota`, {
+    cache: 'no-store',
+  })
+
+  if (!res.ok) {
+    console.error('Falha ao buscar dados da rota')
+    return null
+  }
+
+  return res.json()
+}
 
 export default async function OrdersTable() {
-  const data = {
-    routes: [
-      {
-        droneId: 'drone-alpha-001',
-        droneName: 'Drone Alfa',
-        totalDistanceKm: 12.8,
-        legs: [
-          { sequence: 1, orderId: 101, distanceKm: 4.5 },
-          { sequence: 2, orderId: 103, distanceKm: 5.2 },
-          { sequence: 3, orderId: 102, distanceKm: 3.1 },
-        ],
-      },
-      {
-        droneId: 'drone-beta-007',
-        droneName: 'Drone Beta',
-        totalDistanceKm: 9.5,
-        legs: [{ sequence: 1, orderId: 201, distanceKm: 9.5 }],
-      },
-    ],
-    unassignedOrderIds: [301, 302],
-  }
+  const data = await getRouteData()
 
   const unassigned = data?.unassignedOrderIds ?? []
   const routes = data?.routes ?? []
@@ -45,9 +61,9 @@ export default async function OrdersTable() {
       )}
 
       <div className="space-y-4">
-        {routes.map((route: any) => (
+        {routes.map((route) => (
           <div
-            key={`${route.droneId}-${route.totalDistanceKm}`}
+            key={`${route.droneId} - ${route.totalDistanceKm}`}
             className="rounded-xl border p-3"
           >
             <div className="flex items-center justify-between">
@@ -57,7 +73,7 @@ export default async function OrdersTable() {
               </div>
             </div>
             <ol className="mt-2 list-decimal pl-5 text-sm text-gray-700">
-              {route.legs.map((leg: any) => (
+              {route.legs.map((leg) => (
                 <li key={leg.sequence}>
                   Pedido #{leg.orderId} — {leg.distanceKm.toFixed(2)} km
                 </li>
