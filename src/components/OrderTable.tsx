@@ -1,29 +1,7 @@
 import { recalculateRouteAction } from '@/app/actions/recalculateRouteAction'
+import { RouteOrderTableApiResponse } from '@/types/order-table'
 
-// types/index.ts
-
-/**
- * Representa uma "perna" da viagem, ou seja, uma única entrega dentro de uma rota.
- */
-export interface Leg {
-  sequence: number
-  orderId: string | number
-  distanceKm: number
-}
-
-export interface Route {
-  droneId: string | number
-  droneName: string
-  totalDistanceKm: number
-  legs: Leg[]
-}
-
-export interface RouteApiResponse {
-  routes: Route[]
-  unassignedOrderIds: (string | number)[]
-}
-
-async function getRouteData(): Promise<RouteApiResponse | null> {
+async function getRouteData(): Promise<RouteOrderTableApiResponse | null> {
   const res = await fetch(`api/entregas/rota`, {
     cache: 'no-store',
   })
