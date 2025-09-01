@@ -1,8 +1,8 @@
 'use client'
 
+import { createOrderAction } from '@/app/actions/CreateOrderAction'
 import { ChangeEvent, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
-import { createOrderAction } from './actions/CreateOrderAction'
 
 const initialState: { message: string | null } = {
   message: null,
