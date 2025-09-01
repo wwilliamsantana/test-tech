@@ -1,7 +1,7 @@
+// components/CreateOrder.tsx
 'use client'
 
 import { createOrderAction } from '@/app/actions/CreateOrderAction'
-import { ChangeEvent, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 
 const initialState: { message: string | null } = {
@@ -11,25 +11,6 @@ const initialState: { message: string | null } = {
 export default function CreateOrderForm() {
   const [state, formAction] = useFormState(createOrderAction, initialState)
   const { pending } = useFormStatus()
-
-  const [formValues, setFormValues] = useState({
-    weightKg: 1,
-    priority: 'MEDIUM',
-  })
-
-  function getWeight(event: ChangeEvent<HTMLInputElement>) {
-    setFormValues((pastData) => ({
-      ...pastData,
-      weightKg: Number(event.target.value),
-    }))
-  }
-
-  function getPriority(event: ChangeEvent<HTMLSelectElement>) {
-    setFormValues((pastData) => ({
-      ...pastData,
-      priority: event.target.value,
-    }))
-  }
 
   return (
     <form
@@ -71,8 +52,7 @@ export default function CreateOrderForm() {
           min="0.1"
           required
           className="mt-1 w-full rounded-md border p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          value={formValues.weightKg}
-          onChange={getWeight}
+          defaultValue={1}
         />
       </label>
 
@@ -82,8 +62,7 @@ export default function CreateOrderForm() {
           name="priority"
           required
           className="mt-1 w-full rounded-md border p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          value={formValues.priority}
-          onChange={getPriority}
+          defaultValue="MEDIUM"
         >
           <option value="LOW">Baixa</option>
           <option value="MEDIUM">Média</option>

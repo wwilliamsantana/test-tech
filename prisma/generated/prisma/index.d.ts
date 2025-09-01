@@ -1175,10 +1175,12 @@ export namespace Prisma {
 
   export type DroneCountOutputType = {
     Trip: number
+    orders: number
   }
 
   export type DroneCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Trip?: boolean | DroneCountOutputTypeCountTripArgs
+    orders?: boolean | DroneCountOutputTypeCountOrdersArgs
   }
 
   // Custom InputTypes
@@ -1197,6 +1199,13 @@ export namespace Prisma {
    */
   export type DroneCountOutputTypeCountTripArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TripWhereInput
+  }
+
+  /**
+   * DroneCountOutputType without action
+   */
+  export type DroneCountOutputTypeCountOrdersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OrderWhereInput
   }
 
 
@@ -1494,6 +1503,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     Trip?: boolean | Drone$TripArgs<ExtArgs>
+    orders?: boolean | Drone$ordersArgs<ExtArgs>
     _count?: boolean | DroneCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["drone"]>
 
@@ -1539,6 +1549,7 @@ export namespace Prisma {
   export type DroneOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "maxPayloadKg" | "maxRangeKm" | "batteryPct" | "status" | "baseX" | "baseY" | "createdAt" | "updatedAt", ExtArgs["result"]["drone"]>
   export type DroneInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Trip?: boolean | Drone$TripArgs<ExtArgs>
+    orders?: boolean | Drone$ordersArgs<ExtArgs>
     _count?: boolean | DroneCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DroneIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1548,6 +1559,7 @@ export namespace Prisma {
     name: "Drone"
     objects: {
       Trip: Prisma.$TripPayload<ExtArgs>[]
+      orders: Prisma.$OrderPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1955,6 +1967,7 @@ export namespace Prisma {
   export interface Prisma__DroneClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     Trip<T extends Drone$TripArgs<ExtArgs> = {}>(args?: Subset<T, Drone$TripArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TripPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    orders<T extends Drone$ordersArgs<ExtArgs> = {}>(args?: Subset<T, Drone$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2404,6 +2417,30 @@ export namespace Prisma {
   }
 
   /**
+   * Drone.orders
+   */
+  export type Drone$ordersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Order
+     */
+    select?: OrderSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Order
+     */
+    omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    where?: OrderWhereInput
+    orderBy?: OrderOrderByWithRelationInput | OrderOrderByWithRelationInput[]
+    cursor?: OrderWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: OrderScalarFieldEnum | OrderScalarFieldEnum[]
+  }
+
+  /**
    * Drone without action
    */
   export type DroneDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2439,6 +2476,7 @@ export namespace Prisma {
     customerX: number | null
     customerY: number | null
     weightKg: number | null
+    droneId: number | null
   }
 
   export type OrderSumAggregateOutputType = {
@@ -2446,6 +2484,7 @@ export namespace Prisma {
     customerX: number | null
     customerY: number | null
     weightKg: number | null
+    droneId: number | null
   }
 
   export type OrderMinAggregateOutputType = {
@@ -2456,6 +2495,7 @@ export namespace Prisma {
     priority: $Enums.OrderPriority | null
     status: $Enums.OrderStatus | null
     createdAt: Date | null
+    droneId: number | null
   }
 
   export type OrderMaxAggregateOutputType = {
@@ -2466,6 +2506,7 @@ export namespace Prisma {
     priority: $Enums.OrderPriority | null
     status: $Enums.OrderStatus | null
     createdAt: Date | null
+    droneId: number | null
   }
 
   export type OrderCountAggregateOutputType = {
@@ -2476,6 +2517,7 @@ export namespace Prisma {
     priority: number
     status: number
     createdAt: number
+    droneId: number
     _all: number
   }
 
@@ -2485,6 +2527,7 @@ export namespace Prisma {
     customerX?: true
     customerY?: true
     weightKg?: true
+    droneId?: true
   }
 
   export type OrderSumAggregateInputType = {
@@ -2492,6 +2535,7 @@ export namespace Prisma {
     customerX?: true
     customerY?: true
     weightKg?: true
+    droneId?: true
   }
 
   export type OrderMinAggregateInputType = {
@@ -2502,6 +2546,7 @@ export namespace Prisma {
     priority?: true
     status?: true
     createdAt?: true
+    droneId?: true
   }
 
   export type OrderMaxAggregateInputType = {
@@ -2512,6 +2557,7 @@ export namespace Prisma {
     priority?: true
     status?: true
     createdAt?: true
+    droneId?: true
   }
 
   export type OrderCountAggregateInputType = {
@@ -2522,6 +2568,7 @@ export namespace Prisma {
     priority?: true
     status?: true
     createdAt?: true
+    droneId?: true
     _all?: true
   }
 
@@ -2619,6 +2666,7 @@ export namespace Prisma {
     priority: $Enums.OrderPriority
     status: $Enums.OrderStatus
     createdAt: Date
+    droneId: number | null
     _count: OrderCountAggregateOutputType | null
     _avg: OrderAvgAggregateOutputType | null
     _sum: OrderSumAggregateOutputType | null
@@ -2648,6 +2696,8 @@ export namespace Prisma {
     priority?: boolean
     status?: boolean
     createdAt?: boolean
+    droneId?: boolean
+    drone?: boolean | Order$droneArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2658,6 +2708,8 @@ export namespace Prisma {
     priority?: boolean
     status?: boolean
     createdAt?: boolean
+    droneId?: boolean
+    drone?: boolean | Order$droneArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2668,6 +2720,8 @@ export namespace Prisma {
     priority?: boolean
     status?: boolean
     createdAt?: boolean
+    droneId?: boolean
+    drone?: boolean | Order$droneArgs<ExtArgs>
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectScalar = {
@@ -2678,13 +2732,25 @@ export namespace Prisma {
     priority?: boolean
     status?: boolean
     createdAt?: boolean
+    droneId?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerX" | "customerY" | "weightKg" | "priority" | "status" | "createdAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "customerX" | "customerY" | "weightKg" | "priority" | "status" | "createdAt" | "droneId", ExtArgs["result"]["order"]>
+  export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    drone?: boolean | Order$droneArgs<ExtArgs>
+  }
+  export type OrderIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    drone?: boolean | Order$droneArgs<ExtArgs>
+  }
+  export type OrderIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    drone?: boolean | Order$droneArgs<ExtArgs>
+  }
 
   export type $OrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Order"
-    objects: {}
+    objects: {
+      drone: Prisma.$DronePayload<ExtArgs> | null
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       customerX: number
@@ -2693,6 +2759,7 @@ export namespace Prisma {
       priority: $Enums.OrderPriority
       status: $Enums.OrderStatus
       createdAt: Date
+      droneId: number | null
     }, ExtArgs["result"]["order"]>
     composites: {}
   }
@@ -3087,6 +3154,7 @@ export namespace Prisma {
    */
   export interface Prisma__OrderClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    drone<T extends Order$droneArgs<ExtArgs> = {}>(args?: Subset<T, Order$droneArgs<ExtArgs>>): Prisma__DroneClient<$Result.GetResult<Prisma.$DronePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3123,6 +3191,7 @@ export namespace Prisma {
     readonly priority: FieldRef<"Order", 'OrderPriority'>
     readonly status: FieldRef<"Order", 'OrderStatus'>
     readonly createdAt: FieldRef<"Order", 'DateTime'>
+    readonly droneId: FieldRef<"Order", 'Int'>
   }
     
 
@@ -3139,6 +3208,10 @@ export namespace Prisma {
      * Omit specific fields from the Order
      */
     omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
     /**
      * Filter, which Order to fetch.
      */
@@ -3158,6 +3231,10 @@ export namespace Prisma {
      */
     omit?: OrderOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
      * Filter, which Order to fetch.
      */
     where: OrderWhereUniqueInput
@@ -3175,6 +3252,10 @@ export namespace Prisma {
      * Omit specific fields from the Order
      */
     omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
     /**
      * Filter, which Order to fetch.
      */
@@ -3224,6 +3305,10 @@ export namespace Prisma {
      */
     omit?: OrderOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
      * Filter, which Order to fetch.
      */
     where?: OrderWhereInput
@@ -3272,6 +3357,10 @@ export namespace Prisma {
      */
     omit?: OrderOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
      * Filter, which Orders to fetch.
      */
     where?: OrderWhereInput
@@ -3315,6 +3404,10 @@ export namespace Prisma {
      */
     omit?: OrderOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
      * The data needed to create a Order.
      */
     data: XOR<OrderCreateInput, OrderUncheckedCreateInput>
@@ -3346,6 +3439,10 @@ export namespace Prisma {
      * The data used to create many Orders.
      */
     data: OrderCreateManyInput | OrderCreateManyInput[]
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3360,6 +3457,10 @@ export namespace Prisma {
      * Omit specific fields from the Order
      */
     omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
     /**
      * The data needed to update a Order.
      */
@@ -3412,6 +3513,10 @@ export namespace Prisma {
      * Limit how many Orders to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3426,6 +3531,10 @@ export namespace Prisma {
      * Omit specific fields from the Order
      */
     omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
     /**
      * The filter to search for the Order to update in case it exists.
      */
@@ -3453,6 +3562,10 @@ export namespace Prisma {
      */
     omit?: OrderOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
+    /**
      * Filter which Order to delete.
      */
     where: OrderWhereUniqueInput
@@ -3473,6 +3586,25 @@ export namespace Prisma {
   }
 
   /**
+   * Order.drone
+   */
+  export type Order$droneArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Drone
+     */
+    select?: DroneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Drone
+     */
+    omit?: DroneOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DroneInclude<ExtArgs> | null
+    where?: DroneWhereInput
+  }
+
+  /**
    * Order without action
    */
   export type OrderDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3484,6 +3616,10 @@ export namespace Prisma {
      * Omit specific fields from the Order
      */
     omit?: OrderOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: OrderInclude<ExtArgs> | null
   }
 
 
@@ -5742,7 +5878,8 @@ export namespace Prisma {
     weightKg: 'weightKg',
     priority: 'priority',
     status: 'status',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    droneId: 'droneId'
   };
 
   export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
@@ -5775,6 +5912,14 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -5849,6 +5994,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Drone"> | Date | string
     updatedAt?: DateTimeFilter<"Drone"> | Date | string
     Trip?: TripListRelationFilter
+    orders?: OrderListRelationFilter
   }
 
   export type DroneOrderByWithRelationInput = {
@@ -5863,6 +6009,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     Trip?: TripOrderByRelationAggregateInput
+    orders?: OrderOrderByRelationAggregateInput
   }
 
   export type DroneWhereUniqueInput = Prisma.AtLeast<{
@@ -5880,6 +6027,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Drone"> | Date | string
     updatedAt?: DateTimeFilter<"Drone"> | Date | string
     Trip?: TripListRelationFilter
+    orders?: OrderListRelationFilter
   }, "id">
 
   export type DroneOrderByWithAggregationInput = {
@@ -5927,6 +6075,8 @@ export namespace Prisma {
     priority?: EnumOrderPriorityFilter<"Order"> | $Enums.OrderPriority
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     createdAt?: DateTimeFilter<"Order"> | Date | string
+    droneId?: IntNullableFilter<"Order"> | number | null
+    drone?: XOR<DroneNullableScalarRelationFilter, DroneWhereInput> | null
   }
 
   export type OrderOrderByWithRelationInput = {
@@ -5937,6 +6087,8 @@ export namespace Prisma {
     priority?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    droneId?: SortOrderInput | SortOrder
+    drone?: DroneOrderByWithRelationInput
   }
 
   export type OrderWhereUniqueInput = Prisma.AtLeast<{
@@ -5950,6 +6102,8 @@ export namespace Prisma {
     priority?: EnumOrderPriorityFilter<"Order"> | $Enums.OrderPriority
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     createdAt?: DateTimeFilter<"Order"> | Date | string
+    droneId?: IntNullableFilter<"Order"> | number | null
+    drone?: XOR<DroneNullableScalarRelationFilter, DroneWhereInput> | null
   }, "id">
 
   export type OrderOrderByWithAggregationInput = {
@@ -5960,6 +6114,7 @@ export namespace Prisma {
     priority?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    droneId?: SortOrderInput | SortOrder
     _count?: OrderCountOrderByAggregateInput
     _avg?: OrderAvgOrderByAggregateInput
     _max?: OrderMaxOrderByAggregateInput
@@ -5978,6 +6133,7 @@ export namespace Prisma {
     priority?: EnumOrderPriorityWithAggregatesFilter<"Order"> | $Enums.OrderPriority
     status?: EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
     createdAt?: DateTimeWithAggregatesFilter<"Order"> | Date | string
+    droneId?: IntNullableWithAggregatesFilter<"Order"> | number | null
   }
 
   export type TripWhereInput = {
@@ -6103,6 +6259,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     Trip?: TripCreateNestedManyWithoutDroneInput
+    orders?: OrderCreateNestedManyWithoutDroneInput
   }
 
   export type DroneUncheckedCreateInput = {
@@ -6117,6 +6274,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     Trip?: TripUncheckedCreateNestedManyWithoutDroneInput
+    orders?: OrderUncheckedCreateNestedManyWithoutDroneInput
   }
 
   export type DroneUpdateInput = {
@@ -6130,6 +6288,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Trip?: TripUpdateManyWithoutDroneNestedInput
+    orders?: OrderUpdateManyWithoutDroneNestedInput
   }
 
   export type DroneUncheckedUpdateInput = {
@@ -6144,6 +6303,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Trip?: TripUncheckedUpdateManyWithoutDroneNestedInput
+    orders?: OrderUncheckedUpdateManyWithoutDroneNestedInput
   }
 
   export type DroneCreateManyInput = {
@@ -6191,6 +6351,7 @@ export namespace Prisma {
     priority: $Enums.OrderPriority
     status?: $Enums.OrderStatus
     createdAt?: Date | string
+    drone?: DroneCreateNestedOneWithoutOrdersInput
   }
 
   export type OrderUncheckedCreateInput = {
@@ -6201,6 +6362,7 @@ export namespace Prisma {
     priority: $Enums.OrderPriority
     status?: $Enums.OrderStatus
     createdAt?: Date | string
+    droneId?: number | null
   }
 
   export type OrderUpdateInput = {
@@ -6210,6 +6372,7 @@ export namespace Prisma {
     priority?: EnumOrderPriorityFieldUpdateOperationsInput | $Enums.OrderPriority
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    drone?: DroneUpdateOneWithoutOrdersNestedInput
   }
 
   export type OrderUncheckedUpdateInput = {
@@ -6220,6 +6383,7 @@ export namespace Prisma {
     priority?: EnumOrderPriorityFieldUpdateOperationsInput | $Enums.OrderPriority
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    droneId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type OrderCreateManyInput = {
@@ -6230,6 +6394,7 @@ export namespace Prisma {
     priority: $Enums.OrderPriority
     status?: $Enums.OrderStatus
     createdAt?: Date | string
+    droneId?: number | null
   }
 
   export type OrderUpdateManyMutationInput = {
@@ -6249,6 +6414,7 @@ export namespace Prisma {
     priority?: EnumOrderPriorityFieldUpdateOperationsInput | $Enums.OrderPriority
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    droneId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type TripCreateInput = {
@@ -6412,7 +6578,17 @@ export namespace Prisma {
     none?: TripWhereInput
   }
 
+  export type OrderListRelationFilter = {
+    every?: OrderWhereInput
+    some?: OrderWhereInput
+    none?: OrderWhereInput
+  }
+
   export type TripOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type OrderOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -6560,6 +6736,27 @@ export namespace Prisma {
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type DroneNullableScalarRelationFilter = {
+    is?: DroneWhereInput | null
+    isNot?: DroneWhereInput | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type OrderCountOrderByAggregateInput = {
     id?: SortOrder
     customerX?: SortOrder
@@ -6568,6 +6765,7 @@ export namespace Prisma {
     priority?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    droneId?: SortOrder
   }
 
   export type OrderAvgOrderByAggregateInput = {
@@ -6575,6 +6773,7 @@ export namespace Prisma {
     customerX?: SortOrder
     customerY?: SortOrder
     weightKg?: SortOrder
+    droneId?: SortOrder
   }
 
   export type OrderMaxOrderByAggregateInput = {
@@ -6585,6 +6784,7 @@ export namespace Prisma {
     priority?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    droneId?: SortOrder
   }
 
   export type OrderMinOrderByAggregateInput = {
@@ -6595,6 +6795,7 @@ export namespace Prisma {
     priority?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    droneId?: SortOrder
   }
 
   export type OrderSumOrderByAggregateInput = {
@@ -6602,6 +6803,7 @@ export namespace Prisma {
     customerX?: SortOrder
     customerY?: SortOrder
     weightKg?: SortOrder
+    droneId?: SortOrder
   }
 
   export type EnumOrderPriorityWithAggregatesFilter<$PrismaModel = never> = {
@@ -6622,6 +6824,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumOrderStatusFilter<$PrismaModel>
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type DroneScalarRelationFilter = {
@@ -6724,11 +6942,25 @@ export namespace Prisma {
     connect?: TripWhereUniqueInput | TripWhereUniqueInput[]
   }
 
+  export type OrderCreateNestedManyWithoutDroneInput = {
+    create?: XOR<OrderCreateWithoutDroneInput, OrderUncheckedCreateWithoutDroneInput> | OrderCreateWithoutDroneInput[] | OrderUncheckedCreateWithoutDroneInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutDroneInput | OrderCreateOrConnectWithoutDroneInput[]
+    createMany?: OrderCreateManyDroneInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+  }
+
   export type TripUncheckedCreateNestedManyWithoutDroneInput = {
     create?: XOR<TripCreateWithoutDroneInput, TripUncheckedCreateWithoutDroneInput> | TripCreateWithoutDroneInput[] | TripUncheckedCreateWithoutDroneInput[]
     connectOrCreate?: TripCreateOrConnectWithoutDroneInput | TripCreateOrConnectWithoutDroneInput[]
     createMany?: TripCreateManyDroneInputEnvelope
     connect?: TripWhereUniqueInput | TripWhereUniqueInput[]
+  }
+
+  export type OrderUncheckedCreateNestedManyWithoutDroneInput = {
+    create?: XOR<OrderCreateWithoutDroneInput, OrderUncheckedCreateWithoutDroneInput> | OrderCreateWithoutDroneInput[] | OrderUncheckedCreateWithoutDroneInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutDroneInput | OrderCreateOrConnectWithoutDroneInput[]
+    createMany?: OrderCreateManyDroneInputEnvelope
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -6773,6 +7005,20 @@ export namespace Prisma {
     deleteMany?: TripScalarWhereInput | TripScalarWhereInput[]
   }
 
+  export type OrderUpdateManyWithoutDroneNestedInput = {
+    create?: XOR<OrderCreateWithoutDroneInput, OrderUncheckedCreateWithoutDroneInput> | OrderCreateWithoutDroneInput[] | OrderUncheckedCreateWithoutDroneInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutDroneInput | OrderCreateOrConnectWithoutDroneInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutDroneInput | OrderUpsertWithWhereUniqueWithoutDroneInput[]
+    createMany?: OrderCreateManyDroneInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutDroneInput | OrderUpdateWithWhereUniqueWithoutDroneInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutDroneInput | OrderUpdateManyWithWhereWithoutDroneInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
   export type TripUncheckedUpdateManyWithoutDroneNestedInput = {
     create?: XOR<TripCreateWithoutDroneInput, TripUncheckedCreateWithoutDroneInput> | TripCreateWithoutDroneInput[] | TripUncheckedCreateWithoutDroneInput[]
     connectOrCreate?: TripCreateOrConnectWithoutDroneInput | TripCreateOrConnectWithoutDroneInput[]
@@ -6787,12 +7033,50 @@ export namespace Prisma {
     deleteMany?: TripScalarWhereInput | TripScalarWhereInput[]
   }
 
+  export type OrderUncheckedUpdateManyWithoutDroneNestedInput = {
+    create?: XOR<OrderCreateWithoutDroneInput, OrderUncheckedCreateWithoutDroneInput> | OrderCreateWithoutDroneInput[] | OrderUncheckedCreateWithoutDroneInput[]
+    connectOrCreate?: OrderCreateOrConnectWithoutDroneInput | OrderCreateOrConnectWithoutDroneInput[]
+    upsert?: OrderUpsertWithWhereUniqueWithoutDroneInput | OrderUpsertWithWhereUniqueWithoutDroneInput[]
+    createMany?: OrderCreateManyDroneInputEnvelope
+    set?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    disconnect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    delete?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
+    update?: OrderUpdateWithWhereUniqueWithoutDroneInput | OrderUpdateWithWhereUniqueWithoutDroneInput[]
+    updateMany?: OrderUpdateManyWithWhereWithoutDroneInput | OrderUpdateManyWithWhereWithoutDroneInput[]
+    deleteMany?: OrderScalarWhereInput | OrderScalarWhereInput[]
+  }
+
+  export type DroneCreateNestedOneWithoutOrdersInput = {
+    create?: XOR<DroneCreateWithoutOrdersInput, DroneUncheckedCreateWithoutOrdersInput>
+    connectOrCreate?: DroneCreateOrConnectWithoutOrdersInput
+    connect?: DroneWhereUniqueInput
+  }
+
   export type EnumOrderPriorityFieldUpdateOperationsInput = {
     set?: $Enums.OrderPriority
   }
 
   export type EnumOrderStatusFieldUpdateOperationsInput = {
     set?: $Enums.OrderStatus
+  }
+
+  export type DroneUpdateOneWithoutOrdersNestedInput = {
+    create?: XOR<DroneCreateWithoutOrdersInput, DroneUncheckedCreateWithoutOrdersInput>
+    connectOrCreate?: DroneCreateOrConnectWithoutOrdersInput
+    upsert?: DroneUpsertWithoutOrdersInput
+    disconnect?: DroneWhereInput | boolean
+    delete?: DroneWhereInput | boolean
+    connect?: DroneWhereUniqueInput
+    update?: XOR<XOR<DroneUpdateToOneWithWhereWithoutOrdersInput, DroneUpdateWithoutOrdersInput>, DroneUncheckedUpdateWithoutOrdersInput>
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
   }
 
   export type DroneCreateNestedOneWithoutTripInput = {
@@ -7006,6 +7290,17 @@ export namespace Prisma {
     not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedEnumOrderPriorityWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.OrderPriority | EnumOrderPriorityFieldRefInput<$PrismaModel>
     in?: $Enums.OrderPriority[]
@@ -7024,6 +7319,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumOrderStatusFilter<$PrismaModel>
     _max?: NestedEnumOrderStatusFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | null
+    notIn?: number[] | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type TripCreateWithoutDroneInput = {
@@ -7046,6 +7368,34 @@ export namespace Prisma {
 
   export type TripCreateManyDroneInputEnvelope = {
     data: TripCreateManyDroneInput | TripCreateManyDroneInput[]
+  }
+
+  export type OrderCreateWithoutDroneInput = {
+    customerX: number
+    customerY: number
+    weightKg: number
+    priority: $Enums.OrderPriority
+    status?: $Enums.OrderStatus
+    createdAt?: Date | string
+  }
+
+  export type OrderUncheckedCreateWithoutDroneInput = {
+    id?: number
+    customerX: number
+    customerY: number
+    weightKg: number
+    priority: $Enums.OrderPriority
+    status?: $Enums.OrderStatus
+    createdAt?: Date | string
+  }
+
+  export type OrderCreateOrConnectWithoutDroneInput = {
+    where: OrderWhereUniqueInput
+    create: XOR<OrderCreateWithoutDroneInput, OrderUncheckedCreateWithoutDroneInput>
+  }
+
+  export type OrderCreateManyDroneInputEnvelope = {
+    data: OrderCreateManyDroneInput | OrderCreateManyDroneInput[]
   }
 
   export type TripUpsertWithWhereUniqueWithoutDroneInput = {
@@ -7074,6 +7424,106 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Trip"> | Date | string
   }
 
+  export type OrderUpsertWithWhereUniqueWithoutDroneInput = {
+    where: OrderWhereUniqueInput
+    update: XOR<OrderUpdateWithoutDroneInput, OrderUncheckedUpdateWithoutDroneInput>
+    create: XOR<OrderCreateWithoutDroneInput, OrderUncheckedCreateWithoutDroneInput>
+  }
+
+  export type OrderUpdateWithWhereUniqueWithoutDroneInput = {
+    where: OrderWhereUniqueInput
+    data: XOR<OrderUpdateWithoutDroneInput, OrderUncheckedUpdateWithoutDroneInput>
+  }
+
+  export type OrderUpdateManyWithWhereWithoutDroneInput = {
+    where: OrderScalarWhereInput
+    data: XOR<OrderUpdateManyMutationInput, OrderUncheckedUpdateManyWithoutDroneInput>
+  }
+
+  export type OrderScalarWhereInput = {
+    AND?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    OR?: OrderScalarWhereInput[]
+    NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    id?: IntFilter<"Order"> | number
+    customerX?: IntFilter<"Order"> | number
+    customerY?: IntFilter<"Order"> | number
+    weightKg?: FloatFilter<"Order"> | number
+    priority?: EnumOrderPriorityFilter<"Order"> | $Enums.OrderPriority
+    status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
+    createdAt?: DateTimeFilter<"Order"> | Date | string
+    droneId?: IntNullableFilter<"Order"> | number | null
+  }
+
+  export type DroneCreateWithoutOrdersInput = {
+    name: string
+    maxPayloadKg: number
+    maxRangeKm: number
+    batteryPct?: number
+    status?: $Enums.DroneStatus
+    baseX?: number
+    baseY?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Trip?: TripCreateNestedManyWithoutDroneInput
+  }
+
+  export type DroneUncheckedCreateWithoutOrdersInput = {
+    id?: number
+    name: string
+    maxPayloadKg: number
+    maxRangeKm: number
+    batteryPct?: number
+    status?: $Enums.DroneStatus
+    baseX?: number
+    baseY?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    Trip?: TripUncheckedCreateNestedManyWithoutDroneInput
+  }
+
+  export type DroneCreateOrConnectWithoutOrdersInput = {
+    where: DroneWhereUniqueInput
+    create: XOR<DroneCreateWithoutOrdersInput, DroneUncheckedCreateWithoutOrdersInput>
+  }
+
+  export type DroneUpsertWithoutOrdersInput = {
+    update: XOR<DroneUpdateWithoutOrdersInput, DroneUncheckedUpdateWithoutOrdersInput>
+    create: XOR<DroneCreateWithoutOrdersInput, DroneUncheckedCreateWithoutOrdersInput>
+    where?: DroneWhereInput
+  }
+
+  export type DroneUpdateToOneWithWhereWithoutOrdersInput = {
+    where?: DroneWhereInput
+    data: XOR<DroneUpdateWithoutOrdersInput, DroneUncheckedUpdateWithoutOrdersInput>
+  }
+
+  export type DroneUpdateWithoutOrdersInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    maxPayloadKg?: FloatFieldUpdateOperationsInput | number
+    maxRangeKm?: FloatFieldUpdateOperationsInput | number
+    batteryPct?: IntFieldUpdateOperationsInput | number
+    status?: EnumDroneStatusFieldUpdateOperationsInput | $Enums.DroneStatus
+    baseX?: IntFieldUpdateOperationsInput | number
+    baseY?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Trip?: TripUpdateManyWithoutDroneNestedInput
+  }
+
+  export type DroneUncheckedUpdateWithoutOrdersInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    maxPayloadKg?: FloatFieldUpdateOperationsInput | number
+    maxRangeKm?: FloatFieldUpdateOperationsInput | number
+    batteryPct?: IntFieldUpdateOperationsInput | number
+    status?: EnumDroneStatusFieldUpdateOperationsInput | $Enums.DroneStatus
+    baseX?: IntFieldUpdateOperationsInput | number
+    baseY?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    Trip?: TripUncheckedUpdateManyWithoutDroneNestedInput
+  }
+
   export type DroneCreateWithoutTripInput = {
     name: string
     maxPayloadKg: number
@@ -7084,6 +7534,7 @@ export namespace Prisma {
     baseY?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    orders?: OrderCreateNestedManyWithoutDroneInput
   }
 
   export type DroneUncheckedCreateWithoutTripInput = {
@@ -7097,6 +7548,7 @@ export namespace Prisma {
     baseY?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    orders?: OrderUncheckedCreateNestedManyWithoutDroneInput
   }
 
   export type DroneCreateOrConnectWithoutTripInput = {
@@ -7147,6 +7599,7 @@ export namespace Prisma {
     baseY?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUpdateManyWithoutDroneNestedInput
   }
 
   export type DroneUncheckedUpdateWithoutTripInput = {
@@ -7160,6 +7613,7 @@ export namespace Prisma {
     baseY?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    orders?: OrderUncheckedUpdateManyWithoutDroneNestedInput
   }
 
   export type LegUpsertWithWhereUniqueWithoutTripInput = {
@@ -7237,6 +7691,16 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type OrderCreateManyDroneInput = {
+    id?: number
+    customerX: number
+    customerY: number
+    weightKg: number
+    priority: $Enums.OrderPriority
+    status?: $Enums.OrderStatus
+    createdAt?: Date | string
+  }
+
   export type TripUpdateWithoutDroneInput = {
     totalDistance?: FloatFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7253,6 +7717,35 @@ export namespace Prisma {
   export type TripUncheckedUpdateManyWithoutDroneInput = {
     id?: IntFieldUpdateOperationsInput | number
     totalDistance?: FloatFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderUpdateWithoutDroneInput = {
+    customerX?: IntFieldUpdateOperationsInput | number
+    customerY?: IntFieldUpdateOperationsInput | number
+    weightKg?: FloatFieldUpdateOperationsInput | number
+    priority?: EnumOrderPriorityFieldUpdateOperationsInput | $Enums.OrderPriority
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderUncheckedUpdateWithoutDroneInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerX?: IntFieldUpdateOperationsInput | number
+    customerY?: IntFieldUpdateOperationsInput | number
+    weightKg?: FloatFieldUpdateOperationsInput | number
+    priority?: EnumOrderPriorityFieldUpdateOperationsInput | $Enums.OrderPriority
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OrderUncheckedUpdateManyWithoutDroneInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    customerX?: IntFieldUpdateOperationsInput | number
+    customerY?: IntFieldUpdateOperationsInput | number
+    weightKg?: FloatFieldUpdateOperationsInput | number
+    priority?: EnumOrderPriorityFieldUpdateOperationsInput | $Enums.OrderPriority
+    status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

@@ -1,4 +1,4 @@
-import { PrismaClient } from './generated/prisma'
+import { PrismaClient, DroneStatus } from './generated/prisma'
 
 const prisma = new PrismaClient()
 
@@ -17,7 +17,7 @@ async function main() {
         name: 'Drone A',
         maxPayloadKg: defaultPayload,
         maxRangeKm: defaultRange,
-        status: 'IDLE',
+        status: DroneStatus.IDLE,
         baseX: 0,
         baseY: 0,
       },
@@ -25,7 +25,7 @@ async function main() {
         name: 'Drone B',
         maxPayloadKg: defaultPayload,
         maxRangeKm: defaultRange,
-        status: 'IDLE',
+        status: DroneStatus.CHARGING,
         baseX: 0,
         baseY: 0,
       },
@@ -33,7 +33,15 @@ async function main() {
         name: 'Drone C',
         maxPayloadKg: defaultPayload,
         maxRangeKm: defaultRange,
-        status: 'IDLE',
+        status: DroneStatus.MAINTENANCE,
+        baseX: 0,
+        baseY: 0,
+      },
+      {
+        name: 'Drone C',
+        maxPayloadKg: defaultPayload,
+        maxRangeKm: defaultRange,
+        status: DroneStatus.CHARGING,
         baseX: 0,
         baseY: 0,
       },

@@ -1,36 +1,5 @@
-interface Point {
-  x: number
-  y: number
-}
-
-interface Order {
-  id: number
-  customerX: number
-  customerY: number
-  weightKg: number
-}
-
-interface Drone {
-  id: number
-  name: string
-  baseX: number
-  baseY: number
-  maxPayloadKg: number
-  maxRangeKm: number
-}
-
-interface RouteLeg {
-  orderId: number
-  sequence: number
-  distanceKm: number
-}
-
-interface DroneRoute {
-  droneId: number
-  droneName: string
-  totalDistanceKm: number
-  legs: RouteLeg[]
-}
+// lib/allocation.ts
+import type { Drone, Order, Point, DroneRoute, RouteLeg } from '../types/all'
 
 const calculateDistance = (p1: Point, p2: Point): number => {
   return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
@@ -43,6 +12,10 @@ const findNextBestOrder = (
   maxPayloadKg: number,
 ): { order: Order; distance: number } | null => {
   let bestCandidate: { order: Order; distance: number } | null = null
+  let bestScore = -Infinity
+
+  const priorityValues = { HIGH: 3, MEDIUM: 2, LOW: 1 }
+  const PRIORITY_WEIGHT = 100 // Fator de peso: Aumente para priorizar mais a prioridade sobre a distância
 
   for (const order of availableOrders) {
     if (currentLoadKg + order.weightKg > maxPayloadKg) {
@@ -54,7 +27,11 @@ const findNextBestOrder = (
       y: order.customerY,
     })
 
-    if (!bestCandidate || distance < bestCandidate.distance) {
+    // Score que recompensa alta prioridade e baixa distância
+    const score = priorityValues[order.priority] * PRIORITY_WEIGHT - distance
+
+    if (score > bestScore) {
+      bestScore = score
       bestCandidate = { order, distance }
     }
   }
@@ -72,7 +49,7 @@ const buildSingleTrip = (
 
   let currentLoadKg = 0
   let tripDistanceKm = 0
-  let currentPosition = { x: drone.baseX, y: drone.baseY }
+  let currentPosition = { ...base } // Começa na base do drone
 
   while (true) {
     const availableOrders = Array.from(unassignedOrders.values())
@@ -91,6 +68,7 @@ const buildSingleTrip = (
     const nextPosition = { x: nextOrder.customerX, y: nextOrder.customerY }
     const returnToBaseDistance = calculateDistance(nextPosition, base)
 
+    // Verifica se a viagem de ida e volta está dentro do alcance
     if (
       tripDistanceKm + distanceToCustomer + returnToBaseDistance >
       drone.maxRangeKm
@@ -116,12 +94,13 @@ const buildSingleTrip = (
     return null
   }
 
+  // Adiciona a distância final de retorno à base
   tripDistanceKm += calculateDistance(currentPosition, base)
 
   const route: DroneRoute = {
     droneId: drone.id,
     droneName: drone.name,
-    totalDistanceKm: Number(tripDistanceKm.toFixed(2)),
+    totalDistanceKm: tripDistanceKm, // Mantenha a precisão, formate na UI
     legs: tripLegs,
   }
 
@@ -131,15 +110,17 @@ const buildSingleTrip = (
 export function allocateOrders(drones: Drone[], orders: Order[]) {
   const unassignedOrders = new Map(orders.map((o) => [o.id, o]))
   const finalRoutes: DroneRoute[] = []
-  const base: Point = { x: 0, y: 0 }
 
   for (const drone of drones) {
+    const droneBase = { x: drone.baseX, y: drone.baseY }
     while (unassignedOrders.size > 0) {
-      const tripResult = buildSingleTrip(drone, base, unassignedOrders)
+      // Passa a base específica do drone para a função
+      const tripResult = buildSingleTrip(drone, droneBase, unassignedOrders)
 
       if (tripResult) {
         finalRoutes.push(tripResult.route)
       } else {
+        // Se não consegue montar mais nenhuma viagem, passa para o próximo drone
         break
       }
     }
@@ -147,6 +128,6 @@ export function allocateOrders(drones: Drone[], orders: Order[]) {
 
   return {
     routes: finalRoutes,
-    unassignedOrderIds: Array.from(unassignedOrders.keys()),
+    unassignedOrderIds: Array.from(unassignedOrders.values()),
   }
 }

@@ -137,7 +137,8 @@ exports.Prisma.OrderScalarFieldEnum = {
   weightKg: 'weightKg',
   priority: 'priority',
   status: 'status',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  droneId: 'droneId'
 };
 
 exports.Prisma.TripScalarFieldEnum = {
@@ -158,6 +159,11 @@ exports.Prisma.LegScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 exports.DroneStatus = exports.$Enums.DroneStatus = {
   IDLE: 'IDLE',

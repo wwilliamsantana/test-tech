@@ -39,6 +39,7 @@ model Drone {
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
   Trip         Trip[]
+  orders       Order[]
 }
 
 model Order {
@@ -49,6 +50,9 @@ model Order {
   priority  OrderPriority
   status    OrderStatus   @default(PENDING)
   createdAt DateTime      @default(now())
+
+  droneId Int?
+  drone   Drone? @relation(fields: [droneId], references: [id])
 }
 
 model Trip {
