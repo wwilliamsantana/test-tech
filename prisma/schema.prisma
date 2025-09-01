@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum DroneStatus {
+  IDLE
+  CHARGING
+  MAINTENANCE
+}
+
+enum OrderPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum OrderStatus {
+  PENDING
+  SCHEDULED
+  DELIVERED
+  CANCELLED
+}
+
+model Drone {
+  id           Int         @id @default(autoincrement())
+  name         String
+  maxPayloadKg Float
+  maxRangeKm   Float
+  batteryPct   Int         @default(100)
+  status       DroneStatus @default(IDLE)
+  baseX        Int         @default(0)
+  baseY        Int         @default(0)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  Trip         Trip[]
+}
+
+model Order {
+  id        Int           @id @default(autoincrement())
+  customerX Int
+  customerY Int
+  weightKg  Float
+  priority  OrderPriority
+  status    OrderStatus   @default(PENDING)
+  createdAt DateTime      @default(now())
+}
+
+model Trip {
+  id            Int      @id @default(autoincrement())
+  droneId       Int
+  totalDistance Float
+  createdAt     DateTime @default(now())
+  drone         Drone    @relation(fields: [droneId], references: [id])
+  legs          Leg[]
+}
+
+model Leg {
+  id       Int   @id @default(autoincrement())
+  tripId   Int
+  orderId  Int
+  sequence Int
+  distance Float
+  trip     Trip  @relation(fields: [tripId], references: [id])
+}
