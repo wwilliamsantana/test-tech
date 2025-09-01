@@ -25,11 +25,10 @@ export default function CreateOrderForm() {
   }
 
   function getPriority(event: ChangeEvent<HTMLSelectElement>) {
-    console.log(event.target.value)
-    // setFormValues((pastData) => ({
-    //   ...pastData,
-    //   priority: event.target.value,
-    // }))
+    setFormValues((pastData) => ({
+      ...pastData,
+      priority: event.target.value,
+    }))
   }
 
   return (
