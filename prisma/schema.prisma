@@ -21,8 +21,9 @@ enum OrderPriority {
 }
 
 enum OrderStatus {
+  IDLE
   PENDING
-  SCHEDULED
+  RETURNING
   DELIVERED
   CANCELLED
 }
