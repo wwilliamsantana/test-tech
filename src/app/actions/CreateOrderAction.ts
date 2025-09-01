@@ -24,7 +24,6 @@ export async function createOrderAction(
     const validationResult = orderSchema.safeParse(data)
 
     if (!validationResult.success) {
-      // Pega a primeira mensagem de erro para simplicidade
       const firstError = validationResult.error.message
       return { message: `Dados inválidos: ${firstError}` }
     }
@@ -33,7 +32,7 @@ export async function createOrderAction(
       data: validationResult.data,
     })
 
-    revalidatePath('/') // Revalida a página principal
+    revalidatePath('/')
 
     return { message: `Pedido #${newOrder.id} criado com sucesso!` }
   } catch (error) {

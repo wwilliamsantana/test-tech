@@ -1,5 +1,5 @@
 import { Order } from '@/types/all'
-import { AlertTriangle } from 'lucide-react' // Ícone para dar destaque (instale com: npm install lucide-react)
+import { AlertTriangle } from 'lucide-react'
 
 interface UnallocatedOrdersProps {
   orders: Order[]

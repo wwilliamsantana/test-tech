@@ -1,4 +1,3 @@
-// lib/allocation.ts
 import type { Drone, Order, Point, DroneRoute, RouteLeg } from '../types/all'
 
 const calculateDistance = (p1: Point, p2: Point): number => {
@@ -15,7 +14,7 @@ const findNextBestOrder = (
   let bestScore = -Infinity
 
   const priorityValues = { HIGH: 3, MEDIUM: 2, LOW: 1 }
-  const PRIORITY_WEIGHT = 100 // Fator de peso: Aumente para priorizar mais a prioridade sobre a distância
+  const PRIORITY_WEIGHT = 100
 
   for (const order of availableOrders) {
     if (currentLoadKg + order.weightKg > maxPayloadKg) {
@@ -27,7 +26,6 @@ const findNextBestOrder = (
       y: order.customerY,
     })
 
-    // Score que recompensa alta prioridade e baixa distância
     const score = priorityValues[order.priority] * PRIORITY_WEIGHT - distance
 
     if (score > bestScore) {
@@ -49,7 +47,7 @@ const buildSingleTrip = (
 
   let currentLoadKg = 0
   let tripDistanceKm = 0
-  let currentPosition = { ...base } // Começa na base do drone
+  let currentPosition = { ...base }
 
   while (true) {
     const availableOrders = Array.from(unassignedOrders.values())
@@ -68,7 +66,6 @@ const buildSingleTrip = (
     const nextPosition = { x: nextOrder.customerX, y: nextOrder.customerY }
     const returnToBaseDistance = calculateDistance(nextPosition, base)
 
-    // Verifica se a viagem de ida e volta está dentro do alcance
     if (
       tripDistanceKm + distanceToCustomer + returnToBaseDistance >
       drone.maxRangeKm
@@ -94,13 +91,12 @@ const buildSingleTrip = (
     return null
   }
 
-  // Adiciona a distância final de retorno à base
   tripDistanceKm += calculateDistance(currentPosition, base)
 
   const route: DroneRoute = {
     droneId: drone.id,
     droneName: drone.name,
-    totalDistanceKm: tripDistanceKm, // Mantenha a precisão, formate na UI
+    totalDistanceKm: tripDistanceKm,
     legs: tripLegs,
   }
 
@@ -114,13 +110,11 @@ export function allocateOrders(drones: Drone[], orders: Order[]) {
   for (const drone of drones) {
     const droneBase = { x: drone.baseX, y: drone.baseY }
     while (unassignedOrders.size > 0) {
-      // Passa a base específica do drone para a função
       const tripResult = buildSingleTrip(drone, droneBase, unassignedOrders)
 
       if (tripResult) {
         finalRoutes.push(tripResult.route)
       } else {
-        // Se não consegue montar mais nenhuma viagem, passa para o próximo drone
         break
       }
     }

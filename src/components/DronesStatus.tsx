@@ -1,4 +1,3 @@
-// components/DronesStatus.tsx
 import { Drone } from '@/types/all'
 
 async function getDrones(): Promise<Drone[]> {
@@ -6,7 +5,7 @@ async function getDrones(): Promise<Drone[]> {
     `${process.env.NEXT_PUBLIC_API_URL}/api/drones`,
     {
       next: {
-        revalidate: 60, // 60 seconds
+        revalidate: 60, // seconds
       },
     },
   )

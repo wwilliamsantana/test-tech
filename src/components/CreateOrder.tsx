@@ -1,4 +1,3 @@
-// components/CreateOrder.tsx
 'use client'
 
 import { createOrderAction } from '@/app/actions/CreateOrderAction'

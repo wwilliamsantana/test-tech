@@ -48,7 +48,6 @@ async function main() {
     ],
   })
 
-  // Pedidos exemplo
   await prisma.order.createMany({
     data: [
       {
