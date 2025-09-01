@@ -1,8 +1,41 @@
 'use client'
 
+import { ChangeEvent, useState } from 'react'
+import { useFormState, useFormStatus } from 'react-dom'
+import { createOrderAction } from './actions/CreateOrderAction'
+
+const initialState: { message: string | null } = {
+  message: null,
+}
+
 export default function CreateOrderForm() {
+  const [state, formAction] = useFormState(createOrderAction, initialState)
+  const { pending } = useFormStatus()
+
+  const [formValues, setFormValues] = useState({
+    weightKg: 1,
+    priority: 'MEDIUM',
+  })
+
+  function getWeight(event: ChangeEvent<HTMLInputElement>) {
+    setFormValues((pastData) => ({
+      ...pastData,
+      weightKg: Number(event.target.value),
+    }))
+  }
+
+  function getPriority(event: ChangeEvent<HTMLSelectElement>) {
+    setFormValues((pastData) => ({
+      ...pastData,
+      priority: event.target.value,
+    }))
+  }
+
   return (
-    <form className="grid grid-cols-2 gap-4 rounded-2xl border bg-white p-5 shadow-sm">
+    <form
+      action={formAction}
+      className="grid grid-cols-2 gap-4 rounded-2xl border bg-white p-5 shadow-sm"
+    >
       <h2 className="col-span-2 text-xl font-semibold text-gray-800">
         Novo Pedido
       </h2>
@@ -38,6 +71,8 @@ export default function CreateOrderForm() {
           min="0.1"
           required
           className="mt-1 w-full rounded-md border p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          value={formValues.weightKg}
+          onChange={getWeight}
         />
       </label>
 
@@ -47,6 +82,8 @@ export default function CreateOrderForm() {
           name="priority"
           required
           className="mt-1 w-full rounded-md border p-2 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+          value={formValues.priority}
+          onChange={getPriority}
         >
           <option value="LOW">Baixa</option>
           <option value="MEDIUM">Média</option>
@@ -57,10 +94,14 @@ export default function CreateOrderForm() {
       <div className="col-span-2 flex items-center gap-4">
         <button
           type="submit"
+          disabled={pending}
           className="rounded-xl bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:bg-gray-400 disabled:opacity-70"
         >
-          {'Enviando...'}
+          {pending ? 'Enviando...' : 'Criar Pedido'}
         </button>
+        {state?.message && (
+          <span className="text-sm text-gray-600">{state.message}</span>
+        )}
       </div>
     </form>
   )
