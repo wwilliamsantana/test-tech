@@ -1,8 +1,7 @@
 import { recalculateRouteAction } from '@/app/actions/recalculateRouteAction'
-import { RouteOrderTableApiResponse } from '@/types/order-table'
 
-async function getRouteData(): Promise<RouteOrderTableApiResponse | null> {
-  const res = await fetch(`api/entregas/rota`, {
+async function getRouteData() {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`, {
     cache: 'no-store',
   })
 
@@ -39,7 +38,7 @@ export default async function OrdersTable() {
       )}
 
       <div className="space-y-4">
-        {routes.map((route) => (
+        {routes.map((route: any) => (
           <div
             key={`${route.droneId} - ${route.totalDistanceKm}`}
             className="rounded-xl border p-3"
@@ -51,7 +50,7 @@ export default async function OrdersTable() {
               </div>
             </div>
             <ol className="mt-2 list-decimal pl-5 text-sm text-gray-700">
-              {route.legs.map((leg) => (
+              {route.legs.map((leg: any) => (
                 <li key={leg.sequence}>
                   Pedido #{leg.orderId} — {leg.distanceKm.toFixed(2)} km
                 </li>

@@ -1,6 +1,8 @@
 'use server'
 
+import { prisma } from '@/lib/prisma'
 import { revalidatePath } from 'next/cache'
+import { OrderPriority } from '../../../prisma/generated/prisma'
 
 interface FormState {
   message: string | null
@@ -13,28 +15,32 @@ export async function createOrderAction(
   // await new Promise((resolve) => setTimeout(resolve, 1000))
 
   try {
-    const data = {
+    const orderData = {
       customerX: Number(formData.get('customerX')),
       customerY: Number(formData.get('customerY')),
       weightKg: Number(formData.get('weightKg')),
       priority: formData.get('priority'),
     }
 
-    if (!data.priority || data.weightKg <= 0) {
+    if (!orderData.priority || orderData.weightKg <= 0) {
       return { message: 'Dados inválidos. Verifique o peso e a prioridade.' }
     }
 
-    console.log('Criando pedido no servidor com os dados:', data)
+    console.log('Criando pedido no servidor com os dados:', orderData)
     // Aqui você faria a chamada para o seu banco de dados ou serviço externo
-    // ALERT - CHAMADA PARA BANCO - Exmeplo : const newOrder = await db.order.create({ data });
+    // ALERT - CHAMADA PARA BANCO - Exmeplo
+    const newOrder = await prisma.order.create({
+      data: {
+        customerX: orderData.customerX,
+        customerY: orderData.customerY,
+        weightKg: orderData.weightKg,
+        priority: orderData.priority as OrderPriority,
+      },
+    })
 
-    // Simulação de sucesso
-    const newOrderId = Math.floor(Math.random() * 1000)
+    revalidatePath('/details')
 
-    // Limpa o cache da página de pedidos, se houver uma, para exibir o novo pedido
-    revalidatePath('/pedidos')
-
-    return { message: `Pedido #${newOrderId} criado com sucesso!` }
+    return { message: `Pedido ${newOrder.id} criado com sucesso!` }
   } catch (error) {
     console.error(error)
     return { message: 'Erro inesperado ao criar o pedido.' }
