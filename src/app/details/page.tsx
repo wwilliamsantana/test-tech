@@ -1,4 +1,5 @@
 import CreateOrderForm from '@/components/CreateOrder'
+import DronesStatus from '@/components/DronesStatus'
 import OrdersTable from '@/components/OrderTable'
 
 export default function Details() {
@@ -9,7 +10,7 @@ export default function Details() {
         <OrdersTable />
       </div>
       <div className="lg:col-span-1">
-        <div>Section 3</div>
+        <DronesStatus />
       </div>
     </div>
   )
